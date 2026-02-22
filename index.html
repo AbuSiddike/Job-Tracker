@@ -1,11 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Application Tracker</title>
+    <link rel="stylesheet" href="./tailwind_styles/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .geist {
+        font-family: 'Geist', sans-serif;
+      }
+    </style>
+  </head>
+  <body class="geist">
+    <!-- ======= DASHBOARD ======= -->
+    <section class="max-w-7xl mx-auto mb-10">
+      <h1 class="text-3xl font-bold mb-6">
+        Job Application Tracker
+      </h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body text-center">
+            <h2 class="card-title justify-center">Total Jobs</h2>
+            <p id="total-count" class="text-3xl font-bold">0</p>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body text-center">
+            <h2 class="card-title justify-center">Interview</h2>
+            <p id="interview-count" class="text-3xl font-bold text-success">
+              0
+            </p>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body text-center">
+            <h2 class="card-title justify-center">Rejected</h2>
+            <p id="rejected-count" class="text-3xl font-bold text-error">0</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
