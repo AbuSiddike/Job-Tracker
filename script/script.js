@@ -1,90 +1,59 @@
-const jobs = [
-  {
-    id: 1,
-    company: 'Mobile First Corp',
-    position: 'React Native Developer',
-    location: 'Remote',
-    type: 'Full-time',
-    salary: '$130,000-$175,000',
-    description:
-      'Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.',
-    status: 'all',
-  },
-  {
-    id: 2,
-    company: 'WedFlow Agency',
-    position: 'Web Designer & Developer',
-    location: 'Los Angeles, CA',
-    type: 'Part-time',
-    salary: '$80,000-$120,000',
-    description:
-      'Create stunning web experiences for high-profile clients. Must have portfolio and experience with modern web design trends',
-    status: 'all',
-  },
-  {
-    id: 3,
-    company: 'DataViz Solutions',
-    position: 'Data Visualization Specialist',
-    location: 'Boston, MA',
-    type: 'Full-time',
-    salary: '$125,000-$165,000',
-    description:
-      'Transform complex data into compelling visualizations. Requires skills: D3.js, React, nad strong analytical thinking.',
-    status: 'all',
-  },
-  {
-    id: 4,
-    company: 'CloudFirst Inc',
-    position: 'Backend Developer',
-    location: 'Seattle, WA',
-    type: 'Full-time',
-    salary: '$140,000-$190,000',
-    description:
-      'Design and maintain scalable backend systems using Python and AWS. Work with modern DevOps practices and cloud infrastructure.',
-    status: 'all',
-  },
-  {
-    id: 5,
-    company: 'Innovation Labs',
-    position: 'UI/Ux Engineer',
-    location: 'Austin, TX',
-    type: 'Full-time',
-    salary: '$110,000-$150,000',
-    description:
-      'Create beautiful and functional user interfaces for suite of products. Strong design skills and frontend development expertise required.',
-    status: 'all',
-  },
-  {
-    id: 6,
-    company: 'MegaCorp Solutions',
-    position: 'JavaScript Developer',
-    location: 'New York, NY',
-    type: 'Full-time',
-    salary: '$130,000-$170,000',
-    description:
-      'Build enterprise applications with Javascript and modern frameworks. We offer competitive compensation, health insurance, and professional development opportunities.',
-    status: 'all',
-  },
-  {
-    id: 7,
-    company: 'StartupXYZ',
-    position: 'Full Stack Engineer',
-    location: 'Remote',
-    type: 'Full-time',
-    salary: '$120,000-$160,000',
-    description:
-      'Join our fast-growing startup and work on our core platform. Experience with Node.js and React required. Great benefits and equity package included.',
-    status: 'all',
-  },
-  {
-    id: 8,
-    company: 'TechCorp Industries',
-    position: 'Senior Frontend Developer',
-    location: 'San Francisco, CA',
-    type: 'Full-time',
-    salary: '$130,000-$175,000',
-    description:
-      'We are looking for an experienced Frontend Developer to build scalable web applications using React and Typescript. You will work with a team on cutting-edge projects.',
-    status: 'all',
-  },
-];
+const jobsContainer = document.getElementById('jobs-container');
+const totalCount = document.getElementById('total-count');
+const interviewCount = document.getElementById('interview-count');
+const rejectedCount = document.getElementById('rejected-count');
+const jobCountText = document.getElementById('job-count');
+const tabs = document.querySelectorAll('.tab');
+
+let currentTab = 'all';
+
+function renderJobs(jobArray) {
+  jobsContainer.innerHTML = "";
+
+  if (jobArray.length === 0) {
+    jobsContainer.innerHTML = 
+    `
+      <div class="col-span-full text-center p-10 bg-base-100 rounded-xl shadow">
+        <h3 class="text-xl font-bold mb-2">No Jobs Available</h3>
+        <p class="text-gray-500">You haven’t added any job to this category.</p>
+      </div>
+    `;
+    jobCountText.innerText = "0 Jobs";
+    return;
+  }
+
+  jobArray.forEach(job => {
+    const card = document.createElement("div");
+    card.className = "card bg-base-100 shadow-xl";
+
+    card.innerHTML = 
+    `
+      <div class="card-body">
+        <h2 class="card-title">${job.company}</h2>
+        <p><strong>Position:</strong> ${job.position}</p>
+        <p><strong>Location:</strong> ${job.location}</p>
+        <p><strong>Type:</strong> ${job.type}</p>
+        <p><strong>Salary:</strong> ${job.salary}</p>
+        <p class="text-sm text-gray-600">${job.description}</p>
+
+        <div class="card-actions justify-between mt-4">
+          <div>
+            <button class="btn btn-success btn-sm interview-btn" data-id="${job.id}">
+              Interview
+            </button>
+            <button class="btn btn-error btn-sm reject-btn" data-id="${job.id}">
+              Rejected
+            </button>
+          </div>
+          <button class="btn btn-neutral btn-sm delete-btn" data-id="${job.id}">
+            Delete
+          </button>
+        </div>
+      </div>
+    `;
+
+    jobsContainer.appendChild(card);
+  });
+
+  jobCountText.innerText = `${jobArray.length} Jobs`;
+}
