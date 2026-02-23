@@ -7,6 +7,7 @@ const tabs = document.querySelectorAll('.tab');
 
 let currentTab = 'all';
 
+/* ======= Data Rendering ======= */
 function renderJobs(jobArray) {
   jobsContainer.innerHTML = "";
 
@@ -57,3 +58,62 @@ function renderJobs(jobArray) {
 
   jobCountText.innerText = `${jobArray.length} Jobs`;
 }
+
+/* ======= Updating Counts ======= */
+
+function updateCounts() {
+  totalCount.innerText = jobs.length;
+  interviewCount.innerText = jobs.filter(j => j.status === "interview").length;
+  rejectedCount.innerText = jobs.filter(j => j.status === "rejected").length;
+}
+
+/* ======= Filter and Render Jobs ======= */
+
+function filterAndRender() {
+  if (currentTab === "all") {
+    renderJobs(jobs);
+  } else {
+    const filtered = jobs.filter(j => j.status === currentTab);
+    renderJobs(filtered);
+  }
+}
+
+/* ======= Tab Switching ======= */
+
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("tab-active"));
+    tab.classList.add("tab-active");
+    currentTab = tab.dataset.tab;
+    filterAndRender();
+  });
+});
+
+/* ======= Buttons Action ======= */
+
+jobsContainer.addEventListener("click", function (e) {
+  const id = parseInt(e.target.dataset.id);
+  if (!id) return;
+
+  const index = jobs.findIndex(j => j.id === id);
+
+  if (e.target.classList.contains("interview-btn")) {
+    jobs[index].status = "interview";
+  }
+
+  if (e.target.classList.contains("reject-btn")) {
+    jobs[index].status = "rejected";
+  }
+
+  if (e.target.classList.contains("delete-btn")) {
+    jobs.splice(index, 1);
+  }
+
+  filterAndRender();
+  updateCounts();
+});
+
+/* ======= Initial Load ======= */
+
+renderJobs(jobs);
+updateCounts();
