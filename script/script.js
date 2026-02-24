@@ -14,8 +14,13 @@ function renderJobs(jobArray) {
   if (jobArray.length === 0) {
     jobsContainer.innerHTML = `
       <div class="col-span-full text-center p-10 bg-base-100 rounded-xl shadow">
-        <h3 class="text-xl font-bold mb-2">No Jobs Available</h3>
-        <p class="text-gray-500">You haven’t added any job to this category.</p>
+        <img 
+        src="./assets/jobs.png" 
+        alt="No Jobs" 
+        class="w-32 mx-auto mb-4 opacity-80"
+        />
+        <h3 class="text-xl font-bold mb-2">No jobs available</h3>
+        <p class="text-gray-500">Check back soon for new job opportunities.</p>
       </div>
     `;
     jobCountText.innerText = '0 Jobs';
@@ -26,31 +31,41 @@ function renderJobs(jobArray) {
     const card = document.createElement('div');
     card.className = 'card bg-base-100 shadow-xl';
 
-    card.innerHTML = `
-      <div class="card-body">
-        <h2 class="card-title">${job.company}</h2>
-        <p><strong>Position:</strong> ${job.position}</p>
-        <p><strong>Location:</strong> ${job.location}</p>
-        <p><strong>Type:</strong> ${job.type}</p>
-        <p><strong>Salary:</strong> ${job.salary}</p>
-        <p class="text-sm text-gray-600">${job.description}</p>
+    card.innerHTML = 
+    `
+    <div class="card-body">
+      <h2 class="card-title">${job.company}</h2>
 
-        <div class="card-actions justify-between mt-4">
-          <div>
-            <button class="btn btn-success btn-sm interview-btn" data-id="${job.id}">
-              Interview
-            </button>
-            <button class="btn btn-error btn-sm reject-btn" data-id="${job.id}">
-              Rejected
-            </button>
-          </div>
-          <button class="btn btn-neutral btn-sm delete-btn" data-id="${job.id}">
-            Delete
+      <p><strong>Position:</strong> ${job.position}</p>
+      <p><strong>Location:</strong> ${job.location}</p>
+      <p><strong>Type:</strong> ${job.type}</p>
+      <p><strong>Salary:</strong> ${job.salary}</p>
+
+      ${
+        job.status === "interview"
+          ? `<div class="badge badge-success mb-2">Interview Scheduled</div>`
+          : job.status === "rejected"
+          ? `<div class="badge badge-error mb-2">Application Rejected</div>`
+          : ""
+      }
+
+      <p class="text-sm text-gray-600">${job.description}</p>
+
+      <div class="card-actions justify-between mt-4">
+        <div>
+          <button class="btn btn-outline btn-success btn-sm interview-btn" data-id="${job.id}">
+            Interview
+          </button>
+          <button class="btn btn-outline btn-error btn-sm reject-btn" data-id="${job.id}">
+            Rejected
           </button>
         </div>
+        <button class="btn btn-neutral btn-sm delete-btn" data-id="${job.id}">
+          Delete
+        </button>
       </div>
-    `;
-
+    </div>
+`;
     jobsContainer.appendChild(card);
   });
 
